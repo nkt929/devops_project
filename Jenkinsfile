@@ -1,11 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker { image 'python:3' }
     stages {
         stage('install dependencies') {
             steps {
                 sh '''
-                    setenv PATH "${PATH}:/usr/local/bin"
-                    ls
                     cd app_python
                     pip install Flask pytz
                 '''
