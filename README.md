@@ -43,7 +43,7 @@ To run it use:
 
 The unit tests are provided at the same directory, as an app.
 Thus, to run them execute:
-s
+
 ```bash
 > python3 ./app_python/time_update_test.py
 ```
