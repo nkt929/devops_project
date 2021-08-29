@@ -5,6 +5,7 @@ pipeline {
             steps {
                 sh '''
                     PATH=${PATH}:/usr/local/bin
+                    ls
                     cd app_python
                     pip install Flask pytz
                 '''
