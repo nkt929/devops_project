@@ -1,10 +1,22 @@
 pipeline {
-    agent { docker { image 'python:3.5.1' } }
+    agent { docker { image 'python:3.9-slim' } }
     stages {
-        stage('build') {
+        stage('install dependencies') {
             steps {
-                sh 'python --version'
+                sh '''
+                    cd app_python
+                    pip install Flask pytz
+                '''
             }
         }
-    }
+        stage('testing') {
+            steps {
+                sh '''
+                    black --check .
+                    python time_update_test.py
+                '''
+                }
+            }
+        }
+
 }
