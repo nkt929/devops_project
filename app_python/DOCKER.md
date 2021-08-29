@@ -1,0 +1,25 @@
+# Docker best practices
+- Avoid unnecessary privileges.
+- Avoid running containers as root.
+- Don’t bind to a specific UID.
+- Make executables owned by root and not writable.
+- Reduce attack surface.
+- Leverage multistage builds.
+- Use distroless images, or build your own from scratch.
+- Update your images frequently.
+- Watch out for exposed ports.
+- Prevent confidential data leaks.
+- Never put secrets or credentials in Dockerfile instructions.
+- Prefer COPY over ADD.
+- Be aware of the Docker context, and use .dockerignore.
+- Reduce the number of layers, and order them intelligently.
+- Add metadata and labels.
+- Leverage linters to automatize checks.
+- Scan your images locally during development.
+- Beyond image building.
+- Protect the docker socket and TCP connections.
+- Sign your images, and verify them on runtime.
+- Avoid tag mutability.
+- Don’t run your environment as root.
+- Include a health check.
+- Restrict your application capabilities.
