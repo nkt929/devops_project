@@ -4,7 +4,7 @@ pipeline {
         stage('install dependencies') {
             steps {
                 sh '''
-                    PATH=${PATH}:/usr/local/bin
+                    setenv PATH "${PATH}:/usr/local/bin"
                     ls
                     cd app_python
                     pip install Flask pytz
