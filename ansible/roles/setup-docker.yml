@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: true
+
+  roles:
+    - role: geerlingguy.docker
+      vars:
+        docker_users: [ubuntu]
+    - role: deploy
+      become: true

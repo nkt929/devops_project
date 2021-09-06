@@ -1,0 +1,7 @@
+version: "3"
+
+services:
+  flask_app:
+    image: nkt929/devops_project:latest
+    ports:
+      - "5000:5000"

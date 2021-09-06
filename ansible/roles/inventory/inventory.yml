@@ -1,0 +1,4 @@
+all:
+  hosts:
+    aws:
+      ec2-18-118-46-30.us-east-2.compute.amazonaws.com
