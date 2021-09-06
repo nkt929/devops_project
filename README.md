@@ -47,3 +47,8 @@ Thus, to run them execute:
 ```bash
 > python3 ./app_python/time_update_test.py
 ```
+
+## Commands used for running Ansible
+```bash
+sudo ansible-playbook deploy_playbook.yml  -i /Users/nkt/PycharmProjects/pythonProject/devops/ansible/roles/inventory/inventory.ini --private-key /Users/nkt/Documents/1.pem -u ubuntu
+```
