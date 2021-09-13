@@ -1,0 +1,78 @@
+version: '3'
+
+networks:
+  monitoring.network:
+
+services:
+
+  app:
+    container_name: apppython
+    image: "nkt929/devops_project:latest"
+    expose:
+      - 5000
+    ports:
+      - 5000:5000
+    networks:
+      - monitoring.network
+    logging:
+      driver: "json-file"
+      options:
+        tag: "{{.ImageName}}|{{.Name}}"
+
+  loki:
+    container_name: lki
+    image: grafana/loki:2.3.0
+    expose:
+      - 3100
+    ports:
+      - "3100:3100"
+    networks:
+      - monitoring.network
+    volumes:
+      - ${PWD}/loki.yml:/env/loki/loki.yml
+      - ${PWD}/loki-data:/tmp/loki/
+    logging:
+      driver: "json-file"
+      options:
+        tag: "{{.ImageName}}|{{.Name}}"
+    command: -config.file=/env/loki/loki.yml
+
+  promtail:
+    container_name: ptl
+    image: grafana/promtail:2.3.0
+    expose:
+      - 9080
+    ports:
+      - "9080:9080"
+    networks:
+      - monitoring.network
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers
+      - ${PWD}/promtail.yml:/env/ptl/promtail.yml
+      - ${PWD}/ptl-data:/var/lib/promtail/positions
+    command: -config.file=/env/ptl/promtail.yml
+    logging:
+      driver: "json-file"
+      options:
+        tag: "{{.ImageName}}|{{.Name}}"
+
+  grafana:
+    container_name: grfn
+    image: grafana/grafana:8.1.0
+    expose:
+      - 3000
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - VIRTUAL_HOST=grfn
+      - NETWORK_ACCESS=internal
+      - VIRTUAL_PORT=3000
+    networks:
+      - monitoring.network
+    logging:
+      driver: "json-file"
+      options:
+        tag: "{{.ImageName}}|{{.Name}}"
