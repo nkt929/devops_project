@@ -6,3 +6,7 @@
 2. Focus on Processes
 3. Set the Monitoring in Context
 4. Prepare for Specific Monitoring Situations
+
+# Prometheus and Loki Dashboard screenshots
+![](./Prometheus.png)
+![](./Loki Dashboard.png)

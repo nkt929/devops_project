@@ -76,3 +76,23 @@ services:
       driver: "json-file"
       options:
         tag: "{{.ImageName}}|{{.Name}}"
+
+  prometheus:
+    image: prom/prometheus:v2.29.2
+    container_name: ptus
+    ports:
+      - "9090:9090"
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers
+      - ${PWD}/prometheus.yml:/env/ptus/prometheus.yml
+    command: --config.file=/env/ptus/prometheus.yml
+    networks:
+      - monitoring.network
+    logging:
+      driver: "json-file"
+      options:
+        tag: "{{.ImageName}}|{{.Name}}"
+        max-size: '10m'
+        max-file: '5'
+    cpus: 0.3
+    mem_limit: 100M
