@@ -33,3 +33,9 @@ service/kubernetes   ClusterIP      10.96.0.1        <none>        443/TCP      
 kubectl apply -f deployment.yml
 kubectl apply -f service.yml
 ```
+# How to use Helm:
+```
+helm package devops
+helm install devops ./devops-0.1.0.tgz 
+helm upgrade devops ./devops-0.1.0.tgz   
+```
