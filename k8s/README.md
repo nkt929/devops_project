@@ -19,7 +19,15 @@ NAME                 TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
 service/devops       ClusterIP   10.104.114.174   <none>        5000/TCP   47s
 service/kubernetes   ClusterIP   10.96.0.1        <none>        443/TCP    108m
 ```
+#```kubectl get pods,svc``` output after deployment using Helm
+```
+NAME                          READY   STATUS    RESTARTS   AGE
+pod/devops-8477d9fb84-59rb4   1/1     Running   0          9s
 
+NAME                 TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+service/devops       LoadBalancer   10.101.185.155   <pending>     5000:30310/TCP   34s
+service/kubernetes   ClusterIP      10.96.0.1        <none>        443/TCP          159m
+```
 # How to use:
 ```
 kubectl apply -f deployment.yml
