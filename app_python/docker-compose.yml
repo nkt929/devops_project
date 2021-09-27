@@ -1,0 +1,9 @@
+version: '3.4'
+
+services:
+  python:
+    image: 'nkt929/devops_project:latest'
+    ports:
+      - "5000:5000"
+    volumes:
+    - "./volumes:/code/volumes"
