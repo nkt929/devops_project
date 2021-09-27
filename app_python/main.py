@@ -26,7 +26,7 @@ def get_time():
     return "server time {}".format(server_time)
 
 @app.route("/visits", methods=['GET'])
-def get_time():
+def get_count():
     """
     Shows the visits' counter
     """
