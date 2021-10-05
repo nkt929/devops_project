@@ -1,10 +1,12 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "devops.fullname" . }}
   labels:
     {{- include "devops.labels" . | nindent 4 }}
 spec:
+  serviceName: {{ .Values.service.name }}
+  podManagementPolicy: {{ .Values.statefulSet.podManagementPolicy }}
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
@@ -34,16 +36,8 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           ports:
             - name: http
-              containerPort: 5000
+              containerPort: {{ .Values.image.port }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
@@ -53,9 +47,8 @@ spec:
                   name: credentials
                   key: password
           volumeMounts:
-            - name: config-volume
-              subPath: config.json
-              mountPath: /devops/config.json
+            - name: devops
+              mountPath: /code/volumes
       volumes:
         - name: config-volume
           configMap:
@@ -72,3 +65,8 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  volumeClaimTemplates:
+      - metadata:
+          name: devops
+        spec:
+          {{- toYaml .Values.statefulSet.volumeClaimTemplates.spec | nindent 10 }}
