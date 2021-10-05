@@ -49,10 +49,24 @@ spec:
           volumeMounts:
             - name: devops
               mountPath: /code/volumes
+            - name: workdir
+              mountPath: /usr/share/nginx/html
+                # These containers are run during pod initialization
+      initContainers:
+        - name: install
+          image: busybox
+          command:
+            - wget
+            - "-O"
+            - "/work-dir/index.html"
+            - http://info.cern.ch
+          volumeMounts:
+            - name: workdir
+              mountPath: "/work-dir"
+      dnsPolicy: Default
       volumes:
-        - name: config-volume
-          configMap:
-            name: config
+        - name: workdir
+          emptyDir: { }
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
