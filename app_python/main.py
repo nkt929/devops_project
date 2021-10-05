@@ -5,7 +5,11 @@ import pytz
 
 
 app = Flask(__name__)
-
+try:
+    with open("./volumes/count", "w") as f:
+        f.write(str(0))
+except:
+    print("count is not empty")
 
 @app.route("/", methods=['GET'])
 def get_tims():
@@ -24,6 +28,7 @@ def get_tims():
     datetime_moscow = datetime.datetime.now(tz_moscow)
     server_time = datetime_moscow.strftime('%A %B, %d %Y %H:%M:%S')
     return "server time {}".format(server_time)
+
 
 @app.route("/visits", methods=['GET'])
 def get_count():
